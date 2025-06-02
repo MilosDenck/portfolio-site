@@ -47,7 +47,7 @@ jobs:
         env:
           TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }} << 'EOF'
-          docker stop astro-app || true && docker rm astro-app || true
-          docker run -d --name astro-app -p 80:7000 --restart always ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }}
+          docker stop portfolio-site || true && docker rm astro-app || true
+          docker run -d --name portfolio-site -p 80:7000 --restart always ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"
           EOF
