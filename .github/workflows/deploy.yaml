@@ -22,29 +22,24 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Check Docker login inputs
-        run: |
-          echo "User: ${{ secrets.DOCKERHUB_USERNAME }}"
-          echo "Token length: ${#${{ secrets.DOCKERHUB_TOKEN }}}"
-
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker image
         env:
           TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
-        run: docker build -t "${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG" .
+        run: docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG" .
 
       - name: upload image to dockerhub
         env:
           TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
-        run: docker push "${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"
+        run: docker push "${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG"
 
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_IP }} >> ~/.ssh/known_hosts
 
 
