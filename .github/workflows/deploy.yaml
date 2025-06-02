@@ -42,13 +42,16 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_IP }} >> ~/.ssh/known_hosts
 
-
       - name: Load and run container on server
-        env:
-          TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
-        run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }}
-          docker ps
-          docker stop portfolio-site || true && docker rm astro-app || true
-          docker run -d --name portfolio-site -p 80:7000 --restart always ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"
-          EOF
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          port: 22
+          script: |
+            ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }}
+            docker ps
+            docker stop portfolio-site || true && docker rm astro-app || true
+            docker run -d --name portfolio-site -p 80:7000 --restart always ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"
+            EOF
