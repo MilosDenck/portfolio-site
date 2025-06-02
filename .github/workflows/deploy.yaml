@@ -15,10 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set TAG variable
-        run: |
-          TAG="${{ github.event.inputs.tag_name || github.ref_name }}"
-          echo "TAG=$TAG" >> $GITHUB_ENV
           
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,10 +31,14 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"" .
+        env:
+          TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
+        run: docker build -t "${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG" .
 
       - name: upload image to dockerhub
-        run: docker push -t ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"" .
+        env:
+          TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
+        run: docker push "${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"
 
       - name: Setup SSH
         run: |
@@ -49,8 +49,10 @@ jobs:
 
 
       - name: Load and run container on server
+        env:
+          TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }} << 'EOF'
           docker stop astro-app || true && docker rm astro-app || true
-          docker run -d --name astro-app -p 80:7000 --restart always ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:${{ github.ref_name }}"
+          docker run -d --name astro-app -p 80:7000 --restart always ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:$TAG"
           EOF
