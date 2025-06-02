@@ -1,0 +1,41 @@
+name: Docker Deploy on Tag
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:${{ github.ref_name }}" .
+
+      - name: upload image to dockerhub
+        run: docker push -t ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:${{ github.ref_name }}" .
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_IP }} >> ~/.ssh/known_hosts
+
+
+      - name: Load and run container on server
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }} << 'EOF'
+          docker stop astro-app || true && docker rm astro-app || true
+          docker run -d --name astro-app -p 80:7000 --restart always ${{ secrets.DOCKERHUB_USERNAME }}"/portfolio-site:${{ github.ref_name }}"
+          EOF
