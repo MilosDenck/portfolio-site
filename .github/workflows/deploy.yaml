@@ -44,14 +44,17 @@ jobs:
 
       - name: Load and run container on server
         uses: appleboy/ssh-action@v1
+        env:
+          TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
         with:
           host: ${{ secrets.SSH_IP }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           port: 22
-          script: |
-            ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }}
-            docker ps
-            docker stop portfolio-site || true && docker rm portfolio-site  || true
-            docker run -d --name portfolio-site -p 7000:80 --restart always "${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG"
-            EOF
+          script: |         
+            export TAG="${{ github.event.inputs.tag_name || github.ref_name }}"
+            echo "Deploying version: $TAG"
+            docker stop portfolio-site || true && docker rm portfolio-site || true
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG
+            docker run -d --name portfolio-site -p 7000:80 --restart always \
+                ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG
