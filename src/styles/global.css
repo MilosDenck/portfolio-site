@@ -7,6 +7,9 @@
 :root {
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
+	--border-radius-small: 6px;
+	--border-radius-medium: 10px;
+	--border-radius-big: 20px;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
 	--gray-light: 235, 235, 220;
@@ -109,14 +112,9 @@ section{
 }
 
 
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
-}
+
+
+
 
 .sr-only {
 	border: 0;
@@ -153,7 +151,6 @@ section{
 	display: block;
 	width: 2em; 
 	filter: brightness(0) invert(1); 
-	border-radius:0; 
 	margin: 0.5em;
 }
 
@@ -162,7 +159,7 @@ section{
 	background: rgba(0, 0, 0, 0.8);
 	color: white;
 	padding: 0.4em 0.5em;
-	border-radius: 6px;
+	border-radius: var(--border-radius-small);
 	font-size: 0.6em;
 	pointer-events: none;
 	white-space: nowrap;
@@ -184,7 +181,7 @@ a:hover {
 .project {
   	overflow: hidden;
 	border: 1px solid rgb(255,255,255,0.5); 
-	border-radius: 20px; 
+	border-radius: var(--border-radius-big); 
 	padding: 0 1.5em; 
 	margin: 1.5em 0; 
 	background-color: rgb(var(--gray-dark-accent));
@@ -204,7 +201,7 @@ h6{
 }
 
 .project:hover{
-	box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+	box-shadow: var(--box-shadow);
 }
 
 .project .content {
@@ -223,12 +220,12 @@ input, textarea {
 	width: 100%;
 	font-size: small;
 	background-color: transparent;
-	padding: 10px;
+	padding: 0.5em;
 	border: 1px solid rgb(255,255,255,0.5);
-	border-radius: 10px;
+	border-radius: var(--border-radius-medium);
 	background-color: rgb(var(--gray-dark-accent));
 	box-sizing: border-box;
-	margin-bottom: 10px;
+	margin-bottom: 0.5em;
 	transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -249,11 +246,11 @@ label {
 button {
 	all: unset;
 	font-size: medium;
-	padding: 5px 10px;
+	padding: 0.3em 0.6em;
 	border: 1px solid white;
-	border-radius: 10px;
+	border-radius: var(--border-radius-medium);
 	float: right;
-	margin-top: 10px;
+	margin-top: 0.5em;
 	cursor: pointer;
 }
 
@@ -267,7 +264,7 @@ button:hover {
 #kontaktformular{
 	margin-top: 0;
 	padding: 0 15%;
-	margin-bottom: 50px;
+	margin-bottom: 3em;
 	
 }
 
@@ -296,7 +293,7 @@ button:hover {
   max-width: 360px;
   background-color: #181820;
   padding: 0.4em;
-  border-radius: 10px;
+  border-radius: var(--border-radius-medium);
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   border: 1px solid #333;
   align-self: flex-start; /* verhindert volle Höhe */
@@ -305,6 +302,119 @@ button:hover {
 .screenshot-wrapper img {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--border-radius-small);
   display: block;
+}
+
+/* img {
+	width: 100%;
+	height: auto;
+	border-radius: 6px;
+	display: block;
+} */
+
+.info-container {
+	display: flex; 
+	align-items: center; 
+	margin-bottom: 20px;
+}
+
+.info-container p{
+	margin-left: 40px;
+}
+
+.content-flex{
+	display: flex; 
+	flex-direction: row-reverse;
+	align-items: center;
+}
+
+.minus{
+	margin: 0 0.5em; 
+	color: rgb(255,255,255,0.5); 
+	font-style: italic;
+}
+
+section p {
+	padding: 0.5em; 
+	margin: 2em 0;
+}
+
+.form-text {
+	padding: 1em;
+}
+
+@media (max-width: 720px) {
+	body {
+		font-size: 18px;
+	}
+	main {
+		padding: 0 0.5em;
+		width: 90%;
+	}
+
+	.form-text {
+		padding: 1em 0;
+	}
+
+	section p {
+		padding: 10px; 
+		margin: 0;
+	}
+
+	h1{
+		font-size: 1.5em;
+		margin-bottom: 1em;
+	}
+
+
+	#kontaktformular {
+		padding: 0;
+	
+	}
+	.info-container {
+		flex-direction: column;
+	}
+
+	.info-container p{
+		margin-left: 0;
+	}
+
+	.content-flex{
+		flex-direction: column;
+	}
+
+	.minus{
+		margin: 0 0.0; 
+		visibility: collapse;
+		font-style: italic;
+	}
+
+	.project summary {
+		margin: 1em 0; 
+		flex-direction: column;
+
+	}
+
+	section{
+		margin-bottom: 7em;
+	}
+
+	h3 {
+		font-size: 1.4em;
+		font-weight: 500;
+		margin: 0;
+	}
+
+	.project summary div{
+		margin: 0;
+	}
+
+	.project.open .content {
+		padding: 0;
+	}
+
+	.project {
+		margin: 1em 0; 
+	}
 }

@@ -57,7 +57,7 @@ document.querySelectorAll('details.project').forEach((detail) => {
     const isOpen = detail.classList.contains('open');
     console.log(isOpen)
     if (isOpen) {
-      content.style.maxHeight = content.scrollHeight + 'px';
+      content.style.maxHeight = content.scrollHeight*2 + 'px';
       requestAnimationFrame(() => {
         content.style.maxHeight = '0px';
         content.style.opacity = '0';
@@ -68,7 +68,7 @@ document.querySelectorAll('details.project').forEach((detail) => {
       }, 400); 
     } else {
       detail.classList.add('open');
-      content.style.maxHeight = content.scrollHeight + 'px';
+      content.style.maxHeight = content.scrollHeight*2 + 'px';
       content.style.opacity = '1';
     }
   });

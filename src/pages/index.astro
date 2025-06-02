@@ -6,6 +6,8 @@ import PumpMyBike from '../components/projects/PumpMyBike.astro';
 import Tetris from '../components/projects/Tetris.astro';
 import WeatherApp from '../components/projects/WeatherApp.astro'
 import PortfolioWebsite from '../components/projects/PortfolioWebsite.astro'
+import ContactForm from '../components/ContactForm.astro';
+import About from '../components/About.astro'
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
@@ -20,49 +22,17 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	<body>
 		<Header />
 		<main>
+			<About />
 			<section>
-				<h1>Hallo, ich bin Miloš</h1>
-				<div style="display: flex; align-items: center; margin-bottom: 20px;">
-					<img class="profile-picture" width="200px" src="/images/photo-m.jpg"></img>
-					<p style="margin-left: 40px; " class="light-grey">
-						Hallo, ich bin Miloš und studiere Medieninformatik an der TU Berlin. 
-						Ich interessiere mich besonders für ganzheitliche App- und Web-Entwicklung – vom Frontend über das Backend bis zur Infrastruktur.
-						Erfahrung habe ich mit React, Node.js, Swift und PostgreSQL sowie im Bereich DevOps.
-					</p>
-				</div>
-				<div style="text-align: center; width: 100%;">
-					<a class="contact-button" href="#kontakt"><b>zum Kontaktformular</b></a>
-				</div>
-			</section>
-			
-
-			<section>
-				<h3>Projekte</h2>
-				<p style="padding: 10px; margin: 40px 0;" class="light-grey">In meiner freien Zeit baue ich gerne kleinere Anwendungen, um Dinge auszuprobieren oder Probleme zu lösen. Eine kleine Auswahl davon ist hier zu sehen.</p>
+				<h3>Projekte</h3>
+				<p class="light-grey">In meiner freien Zeit baue ich gerne kleinere Anwendungen, um Dinge auszuprobieren oder Probleme zu lösen. Eine kleine Auswahl davon ist hier zu sehen.</p>
 				<PumpMyBike />
 				<Tetris />
 				<WeatherApp />
 				<PortfolioWebsite />
 			</section>
 			
-			<section id="kontakt">
-				<h3>Kontakt</h2>
-
-				<form id="kontaktformular">
-					<p style="padding: 10px;" class="light-grey">Lust auf ein Gespräch oder Interesse an Zusammenarbeit? Ich freue mich über Nachrichten – egal ob zu einem meiner Projekte oder einem Stellenangebot.</p>
-					<label for="name">Name:</label><br>
-					<input type="text" id="name" name="name" required>
-
-					<label for="email">E-Mail:</label><br>
-					<input type="email" id="email" name="email" required>
-
-					<label for="message">Nachricht:</label><br>
-					<textarea rows="10" id="message" name="message" required></textarea>
-
-					<button type="submit">Senden</button>
-				</form>
-
-			</section>
+			<ContactForm />
 			
 		</main>
 		<Footer />
