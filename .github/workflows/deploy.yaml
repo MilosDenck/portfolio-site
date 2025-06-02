@@ -52,6 +52,6 @@ jobs:
           script: |
             ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_IP }}
             docker ps
-            docker stop portfolio-site || true && docker rm astro-app || true
-            docker run -d --name portfolio-site -p 7000:80--restart always "${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG"
+            docker stop portfolio-site || true && docker rm portfolio-site  || true
+            docker run -d --name portfolio-site -p 7000:80 --restart always "${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG"
             EOF
