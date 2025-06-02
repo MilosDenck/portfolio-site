@@ -2,47 +2,68 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import PumpMyBike from '../components/projects/PumpMyBike.astro';
+import Tetris from '../components/projects/Tetris.astro';
+import WeatherApp from '../components/projects/WeatherApp.astro'
+import PortfolioWebsite from '../components/projects/PortfolioWebsite.astro'
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	<head>
+	<script src="/scripts/text-effect.js" defer></script>
+	</head>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section>
+				<h1>Hallo, ich bin Miloš</h1>
+				<div style="display: flex; align-items: center; margin-bottom: 20px;">
+					<img class="profile-picture" width="200px" src="/images/photo-m.jpg"></img>
+					<p style="margin-left: 40px; " class="light-grey">
+						Hallo, ich bin Miloš und studiere Medieninformatik an der TU Berlin. 
+						Ich interessiere mich besonders für ganzheitliche App- und Web-Entwicklung – vom Frontend über das Backend bis zur Infrastruktur.
+						Erfahrung habe ich mit React, Node.js, Swift und PostgreSQL sowie im Bereich DevOps.
+					</p>
+				</div>
+				<div style="text-align: center; width: 100%;">
+					<a class="contact-button" href="#kontakt"><b>zum Kontaktformular</b></a>
+				</div>
+			</section>
+			
+
+			<section>
+				<h3>Projekte</h2>
+				<p style="padding: 10px; margin: 40px 0;" class="light-grey">In meiner freien Zeit baue ich gerne kleinere Anwendungen, um Dinge auszuprobieren oder Probleme zu lösen. Eine kleine Auswahl davon ist hier zu sehen.</p>
+				<PumpMyBike />
+				<Tetris />
+				<WeatherApp />
+				<PortfolioWebsite />
+			</section>
+			
+			<section id="kontakt">
+				<h3>Kontakt</h2>
+
+				<form id="kontaktformular">
+					<p style="padding: 10px;" class="light-grey">Lust auf ein Gespräch oder Interesse an Zusammenarbeit? Ich freue mich über Nachrichten – egal ob zu einem meiner Projekte oder einem Stellenangebot.</p>
+					<label for="name">Name:</label><br>
+					<input type="text" id="name" name="name" required>
+
+					<label for="email">E-Mail:</label><br>
+					<input type="email" id="email" name="email" required>
+
+					<label for="message">Nachricht:</label><br>
+					<textarea rows="10" id="message" name="message" required></textarea>
+
+					<button type="submit">Senden</button>
+				</form>
+
+			</section>
+			
 		</main>
 		<Footer />
 	</body>
