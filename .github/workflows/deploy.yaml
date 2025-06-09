@@ -35,12 +35,6 @@ jobs:
           TAG: "${{ github.event.inputs.tag_name || github.ref_name }}"
         run: docker push "${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG"
 
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ secrets.SSH_IP }} >> ~/.ssh/known_hosts
 
       - name: Load and run container on server
         uses: appleboy/ssh-action@v1
@@ -53,7 +47,6 @@ jobs:
           port: 22
           script: |         
             export TAG="${{ github.event.inputs.tag_name || github.ref_name }}"
-            echo "Deploying version: $TAG"
             docker stop portfolio-site || true && docker rm portfolio-site || true
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-site:$TAG
             docker run -d --name portfolio-site -p 7000:80 --restart always \
