@@ -55,7 +55,6 @@ document.querySelectorAll('details.project').forEach((detail) => {
     e.preventDefault();
 
     const isOpen = detail.classList.contains('open');
-    console.log(isOpen)
     if (isOpen) {
       content.style.maxHeight = content.scrollHeight*2 + 'px';
       requestAnimationFrame(() => {
@@ -107,6 +106,22 @@ document.getElementById("kontaktformular").addEventListener("submit", async func
     alert("Netzwerkfehler beim Senden.");
   }
 });
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash.substring(1); 
+  const target = document.getElementById(hash);
+  const content = target.querySelector('.content');
+  if (target && target.tagName.toLowerCase() === "details") {
+    target.classList.add('open');
+    content.style.maxHeight = content.scrollHeight*2 + 'px';
+    content.style.opacity = '1';
+    target.scrollIntoView({ behavior: "smooth" });
+    console.log(target)
+  }
+});
+
+
 
 
 

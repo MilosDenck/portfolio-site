@@ -269,6 +269,10 @@ button:hover {
 	font-size: 1.2em;
 }
 
+summary::-webkit-details-marker {
+	display: none;
+}
+
 .contact-button:hover{
 	text-decoration: none;
 	
@@ -341,10 +345,7 @@ section p {
 }
 
 
-
-
-
-@media (max-width: 720px) {
+@media (max-width: 900px) {
 	body {
 		font-size: 18px;
 	}
@@ -402,6 +403,7 @@ section p {
 		display: none;
 		font-style: italic;
 	}
+	
 
 	.project summary {
 		margin: 1em 0; 
